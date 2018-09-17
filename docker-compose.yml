@@ -1,0 +1,25 @@
+version: '3'
+services:
+
+  app:
+    build: ./app
+    container_name: app
+    ports:
+      - "3000:3000"
+      # - "443:443"
+    restart: always
+    volumes:
+      - certbot-webroot-evsoul:/app/public/.well-known
+      - certbot-letsencrypt:/etc/letsencrypt
+
+  certbot:
+    build: ./certbot
+    container_name: certbot
+    restart: always
+    volumes:
+      - certbot-webroot-evsoul:/webroots/ec2-18-223-190-235.us-east-2.compute.amazonaws.com/.well-known
+      - certbot-letsencrypt:/etc/letsencrypt
+
+volumes:
+  certbot-webroot-evsoul:
+  certbot-letsencrypt:
